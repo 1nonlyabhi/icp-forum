@@ -1,0 +1,149 @@
+{% extends "blog/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="container">
+    <h3 class="white-important col-6 mx-auto" style="text-align: center;">
+        Change Profile Info
+    </h3>
+    <br>
+    <div class="panel panel-default" style="text-align: center;">
+        <p style="font-size: medium;"><b>Email-id: </b>{{ request.user.email }}</p>
+    </div>
+
+
+
+    <div class="col-6 no-padding mx-auto">
+        <hr>
+        <div>
+            <h4 style="text-align: center;">Profile info <a id="modify-a"
+                 href="{% url 'profile-update' pform.id %}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></h4>
+            <div class="list">
+                <li><b>Roll no: </b> {{ pform.rollno }}</li>
+                <li><b>Name: </b>{{ pform.firstname }} {{ pform.lastname }}</li> 
+                <li><b>Bio: </b>  {{ pform.bio }}</li> 
+                <li><b>ExtraCurricular Skills: </b> {{ pform.extraskills }}</li>
+                <li><b>Technical Skills: </b>{{ pform.techskills }}</li> 
+                <li><b>Date Of Birth: </b>{{ pform.birth_date }}</li> 
+                <li><b>LinkedIn: </b>{{ pform.linkedin }}</li>
+                <li><b>Twitter: </b>{{ pform.twitter }}</li>
+                <li><b>GitHub: </b>{{ pform.github }}</li> 
+            </div>
+        </div>
+    </div>
+    
+
+    <div class="col-6 no-padding mx-auto">
+        <hr>
+        <div>
+            <h4 style="text-align: center;">Education
+        <a class="material-icons ml-2"
+            style="font-size: 14px; color: rgb(20, 62, 99);"
+                href="{% url 'education-create' %}">create</a></h4>
+                <br>
+        {% for e in eform %}
+        <li>
+                <b>{{ e.school }}</b>, 
+                {{ e.startYear }}, 
+                {{ e.degree }}, 
+                {{ e.percentage }}, 
+                {{ e.field }} 
+            <a class="material-icons ml-2"
+                style="font-size: 14px; color: rgb(23, 43, 59);"
+                    href="{% url 'education-update' e.id %}">update</a>
+            <a class="material-icons ml-2"
+                style="font-size: 14px; color: rgb(18, 54, 85);"
+                    href="{% url 'education-delete' e.id %}">delete</a>
+            <br>        
+        </li>
+        {% endfor %}
+        </div>
+    </div>
+    
+    <div class="col-6 no-padding mx-auto">
+        <hr>
+        <div>
+            <h4 style="text-align: center;">Certificate
+        <a class="material-icons ml-2"
+            style="font-size: 14px; color: rgb(20, 62, 99);"
+                href="{% url 'certificate-create' %}">create</a></h4>
+                <br>
+        {% for c in cform %}
+        <li>
+                <b>{{ c.name }}</b>, 
+                {{ c.organization }}, 
+                {{ c.expire }}, 
+                {{ c.issueDate }}, 
+                {{ c.credentialURL }} 
+            <a class="material-icons ml-2"
+                style="font-size: 14px; color: rgb(23, 43, 59);"
+                    href="{% url 'certificate-update' c.id %}">update</a>
+            <a class="material-icons ml-2"
+                style="font-size: 14px; color: rgb(18, 54, 85);"
+                    href="{% url 'certificate-delete' c.id %}">delete</a>        
+            <br>
+        </li>
+        {% endfor %}
+        </div>
+    </div>
+    
+    <div class="col-6 no-padding mx-auto">
+        <hr>
+        <div>
+            <h4 style="text-align: center;">Project
+        <a class="material-icons ml-2"
+            style="font-size: 14px; color: rgb(20, 62, 99);"
+                href="{% url 'project-create' %}">create</a></h4>
+                <br>
+        {% for pr in prform %}
+        <li>
+                <b>{{ pr.name }}</b>, 
+                {{ pr.status }}, 
+                {{ pr.startDate }}, 
+                {{ pr.completionDate }}, 
+                {{ pr.description }} 
+            <a class="material-icons ml-2"
+                style="font-size: 14px; color: rgb(23, 43, 59);"
+                    href="{% url 'project-update' pr.id %}">update</a>
+            <a class="material-icons ml-2"
+                style="font-size: 14px; color: rgb(18, 54, 85);"
+                    href="{% url 'project-delete' pr.id %}">delete</a>        
+            <br>
+        </li>
+        {% endfor %}
+        </div>
+    </div>
+    
+    <div class="col-6 no-padding mx-auto">
+        <hr>
+        <div>
+            <h4 style="text-align: center;">Semester
+        <a class="material-icons ml-2"
+            style="font-size: 14px; color: rgb(20, 62, 99);"
+                href="{% url 'semester-create' %}">create</a></h4>
+                <br>
+        {% for s in sform %}
+        <li>
+                <b>{{ s.semester }}</b>, 
+                {{ s.evenOdd }}, 
+                {{ s.totalSub }}, 
+                {{ s.theorySub }}, 
+                {{ s.practicalSub }}, 
+                {{ s.totalMarksObtained }}, 
+                {{ s.totalMarks }},
+                {{ s.carryOverSub }},
+                {{ s.sgpa }} 
+            <a class="material-icons ml-2"
+                style="font-size: 14px; color: rgb(23, 43, 59);"
+                    href="{% url 'semester-update' s.id %}">update</a>
+            <a class="material-icons ml-2"
+                style="font-size: 14px; color: rgb(18, 54, 85);"
+                    href="{% url 'semester-delete' s.id %}">delete</a>        
+            <br>
+        </li>    
+        {% endfor %}
+        </div>
+    </div>
+<br>
+<br>
+</div>
+{% endblock content %}

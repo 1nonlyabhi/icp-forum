@@ -1,0 +1,90 @@
+{% extends "blog/base.html" %}
+{% load static %}
+{% block content %}
+    <h1 style="text-align: center;color:steelblue;">Semester Results</h1>
+    <h4 style="text-align: center;">{{ profiledetail.firstname }} {{ profiledetail.lastname }}</h4>
+    <h6 style="text-align: center;">{{ profiledetail.rollno }}</h6>
+
+    {% for sem in semesterdetail %}
+    <div class="card-next col-6 p-3 mx-auto">
+        <table style="width: 100%; font-family: Verdana; font-size: 8pt;">
+            <thead>
+                <tr>
+                    <td style="width: 30%;">
+                        <span style="font-weight:bold;">Semester</span></td>
+                    <td style="width: 2%;"><b>:</b></td>
+                    <td style="width: 18%;">
+                        <span>{{ sem.semester }}</span>
+                    </td>
+        
+                    <td style="width: 30%;">
+                        <span style="font-weight:bold;">Even/Odd</span></td>
+                    <td style="width: 2%;"><b>:</b></td>
+                    <td style="width: 18%;">
+                        <span>{{ sem.evenOdd }}</span>
+                    </td>
+                </tr>
+        
+                <tr>
+                    <td>
+                        <span style="font-weight:bold;">Total Subjects</span></td>
+                    <td><b>:</b></td>
+                    <td>
+                        <span>{{ sem.totalSub }}</span>
+                    </td>
+        
+                    <td>
+                        <span style="font-weight:bold;">Theory Subjects</span></td>
+                    <td><b>:</b></td>
+                    <td>
+                        <span>{{ sem.theorySub }}</span>
+                    </td>
+                </tr>
+        
+                <tr>
+                    <td>
+                        <span style="font-weight:bold;">Practical Subjects</span></td>
+                    <td><b>:</b></td>
+                    <td>
+                        <span>{{ sem.practicalSub }}</span>
+                    </td>
+        
+                    <td>
+                        <span style="font-weight:bold;">Total Marks Obt.</span></td>
+                    <td><b>:</b></td>
+                    <td>
+                        <span> {{ sem.totalMarksObtained }}</span>
+                    </td>
+                    
+                </tr>
+        
+                <tr>
+                    <td>
+                        <span style="font-weight:bold;">SGPA</span></td>
+                    <td><b>:</b></td>
+                    <td>
+                        <span>{{ sem.sgpa }}</span>
+                    </td>
+
+                    <td>
+                        <span style="font-weight:bold;">Maximum Marks</span></td>
+                    <td><b>:</b></td>
+                    <td>
+                        <span>{{ sem.totalMarks }}</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span style="font-weight:bold;">Carry Over Subjects</span></td>
+                    <td><b>:</b></td>
+                    <td>
+                        <span>{{ sem.carryOverSub }}</span>
+                    </td>
+                </tr>
+            </thead>
+        </table>
+        </div>
+        <br>
+        {% endfor %}
+        <br>
+        {% endblock content %}

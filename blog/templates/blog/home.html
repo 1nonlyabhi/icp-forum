@@ -1,0 +1,329 @@
+{% extends "blog/base.html" %}
+{% load static %}
+{% block content %}
+<div class="row">
+    <div class="col-md-5 ml-auto scrollable">
+        <div class="full-width row">
+            <div class="col-9">
+                <h3 class="white-important mb-3">
+                    {% if user_profile == user %}
+                    Your Timeline
+                    {% elif user_profile != None %}
+                    {{ user_profile.profile.firstname }}'s Timeline
+                    {% else %}
+                    Your Timeline
+                    {% endif %}
+                </h3>
+            </div>
+            <div class="col-3 no-padding">
+                <h6 style="position: absolute; bottom: 0; right: 0" class="white-important mb-3">
+                    {{ page_obj.start_index }} - {{ page_obj.end_index }} of
+                    {{ paginator.count }}
+                </h6>
+            </div>
+        </div>
+
+        {% for post in posts %}
+        <article class="media content-section hovered-tweet box">
+            <div style="width: 100%; word-break: break-all;">
+                <div class="pb-2 row m-0" style="width: 100%; margin-right: 0 !important;">
+                    <div style="padding-left: 0px !important;" class="col-8 no-padding d-flex align-items-center">
+                        <img class="rounded-circle mr-2" style="width: 20px; height: 20px;"
+                            src="{{ post.author.profile.image.url }}">
+                        <a class="mr-2 white-important-next" href="{% url 'user-posts' post.author %}">
+                            {{ post.author.profile.firstname }} ({{ post.author }})
+                        </a>
+                    </div>
+                    <div class="col-4 d-flex flex-row-reverse no-padding align-items-center"
+                        style="padding-right: 0 !important;">
+                        {% if post.author == user %}
+                        <a class="material-icons ml-2" style="font-size: 14px; color: aliceblue;"
+                            href="{% url 'post-delete' post.id %}">clear</a>
+                        <a class="material-icons ml-2" style="font-size: 14px; color: aliceblue;"
+                            href="{% url 'post-update' post.id %}">update</a>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="mb-2" style="width: 100%; height: 1px; background-color: rgba(255, 255, 255, 0.1)"></div>
+                <a style="color: rgba(255, 255, 255, 0.5) !important;" href="{% url 'post-detail' post.id %}">
+                    <p class="mb-4" style="color: white;">  <!-- white-space: pre-line; -->
+                        {{ post.content|safe|truncatechars:150 }}
+                    </p>
+                </a>
+                {% if post.attachedurl != '' or None %}
+                    <a target="_blank" href="{{ post.attachedurl }}" style="color: rgb(196, 211, 224);"><i class="fa fa-link" aria-hidden="true"> #urlAttached</i></a>
+                {% endif %}
+                {% if post.attachedimage != '' or None %}
+                <a href="{% url 'post-detail' post.id %}" style="color: rgb(199, 214, 228);"><i class="fa fa-picture-o" aria-hidden="true"> #imageAttached</i></a>
+                {% endif %}
+
+                <div class="row">
+                    <div class="col-6" style="display: flex;">
+                        <small style="opacity: 0.4;">
+
+                            <!-- Like Buttons Here -->
+
+                            <div class="d-flex flex-row">
+                                <form method="POST" action="{% url 'like' post.pk %}">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="next" value="{{ request.path }}">
+                                    <button class="remove-default-btn" type="submit">
+                                        {% if user in post.likes.all %}
+                                        <i class="fas fa-thumbs-up"> <span>{{ post.likes.all.count }}</span></i>
+                                        {% else %}
+                                        <i class="far fa-thumbs-up"> <span>{{ post.likes.all.count }}</span></i>
+                                        {% endif %}
+                                    </button>
+                                </form>
+
+                                <form method="POST" action="{% url 'dislike' post.pk %}">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="next" value="{{ request.path }}">
+                                    <button class="remove-default-btn" type="submit">
+                                        {% if user in post.dislikes.all %}
+                                        <i class="fas fa-thumbs-down"> <span>{{ post.dislikes.all.count }}</span></i>
+                                        {% else %}
+                                        <i class="far fa-thumbs-down"> <span>{{ post.dislikes.all.count }}</span></i>
+                                        {% endif %}
+                                    </button>
+                                </form>
+                            </div>
+
+
+                        </small>
+                        <div class="d-flex flex-row">
+                            <small style="opacity: 0.4; margin-left:15px;">
+                                <button class="remove-default-btn" style="font-family: cursive;" type="link">
+                                    <a href="{% url 'post-detail' post.id %}">
+                                        <i style="color: black; font-size: 16px;" class="far fa-comment"></i> {{ post.number_of_comments }} comment(s)
+                                    </a>
+                                </button>
+                            </small>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <small style="opacity: 0.4;" class="white-important-next d-flex full-width flex-row-reverse">
+                            {{ post.date_posted | date:"H:i l, d.m.y" }}
+                        </small>
+                    </div>
+                </div>
+
+            </div>
+        </article>
+        {% endfor %}
+
+        <div class="full-width d-flex justify-content-center">
+            {% if is_paginated %}
+            {% if page_obj.has_previous %}
+            <a class="btn btn-sm btn-outline-secondary mb-4 mr-2" href="?page=1">First</a>
+            <a class="btn btn-sm btn-outline-secondary mb-4 mr-2"
+                href="?page={{ page_obj.previous_page_number }}">Previous</a>
+            {% endif %}
+
+            {% for num in page_obj.paginator.page_range %}
+            {% if page_obj.number == num %}
+            <a class="btn btn-sm btn-info mb-4 mr-2" href="?page={{ num }}">{{ num }}</a>
+            {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %} <a
+                class="btn btn-sm btn-outline-secondary mb-4 mr-2" href="?page={{ num }}">{{ num }}</a>
+                {% endif %}
+                {% endfor %}
+
+                {% if page_obj.has_next %}
+                <a class="btn btn-sm btn-outline-secondary mb-4 mr-2"
+                    href="?page={{ page_obj.next_page_number }}">Next</a>
+                <a class="btn btn-sm btn-outline-secondary mb-4 mr-2"
+                    href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+                {% endif %}
+                {% endif %}
+        </div>
+    </div>
+    <div class="col-md-3 mr-auto dont-move">
+        <form action="{% url 'search' %}" method="post">{% csrf_token %}
+            <div class="search-container">
+                <div class="search">
+                    <input required name="search" type="text" id="zip-code-input" placeholder="Search icpForum">
+                    <button type="submit" style="border:0; background: transparent;"><i class="fa fa-search"></i>
+                    </button> </a>
+        </form>
+    </div>
+</div>
+
+
+{% if user_profile is None %}
+<h3 class="white-important mb-3 mt-4"> Trends </h3>
+
+<article class="t-section media content-section">
+
+    <div class="row ">
+        <div class="col-12 ml-2">
+            <h3 style="color: aliceblue;">Who to follow</h3>
+        </div>
+        <ul class="col-12 mt-2 ml-2">
+            {% for user in all_users %}
+            {% if request.user != user %}
+            <li>
+                <div class="who-to-follow">
+
+                    <div style="padding-left: 0px !important;" class="col-8 no-padding d-flex align-items-center">
+                        <img class="rounded-circle mr-2" style="width: 20px; height: 20px;"
+                            src="{{ user.profile.image.url }}">
+                        <a class="mr-2 white-important-next" href="{% url 'user-posts' user.username %}">
+                            {{ user.profile.firstname }} {% if user.profile.lastname %}{{ user.profile.lastname }} {% endif %}
+                        </a>
+                        {% if user.profile.verified %}
+                        <i class="fa fa-check-circle" style="color: aliceblue;" aria-hidden="true"></i>
+                        {% endif %}
+                    </div>
+                    <p style="font-family:cursive; color:rgb(153, 208, 218); margin-left: 20px;">&nbsp;@{{ user.username }}
+                        
+                    </p>
+                </div>
+            </li>
+            {% endif %}
+            {% endfor %}
+        </ul>
+
+    </div>
+
+</article>
+
+{% else %}
+<h3 class="white-important ml-3 mb-3 mt-4 text"> Profile </h3>
+<div class="profile-section" style="text-align: center;">
+    <article class="media content-section" style="height: 150px; width: 100%">
+        {% if user_profile != None %}
+        <div class="mt-2 d-flex full-width align-items-center">
+            <img class="rounded-circle mr-3 img-fluid ml-3" style="width: 90px; height: 90px;"
+                src="{{ user_profile.profile.image.url }}">
+            <div>
+                <h5 style="text-align: left" class="white-important-next">
+                    {{ user_profile.profile.firstname }}
+                    {% if user_profile.profile.verified %}
+                    <i class="fa fa-check-circle" style="color: aliceblue;" aria-hidden="true"></i>
+                    {% endif %}
+                </h5>
+                <h6 style="text-align: left; font-family: cursive; color: antiquewhite;">
+                     @{{ user_profile.username }}
+                    
+                </h6>
+                <h6 style="text-align: left; font-family:cursive; color:rgb(153, 208, 218);" class="email-profile">
+                    {{ user_profile.email }}
+                </h6>
+            </div>
+        </div>
+        {% else %}
+        <div class="mt-2 d-flex full-width align-items-center">
+            <img class="rounded-circle mr-3 ml-3" style="width: 90px; height: 90px;" src="{{ user.profile.image.url }}">
+            <div>
+                <h5 style="text-align: left" class="white-important-next">
+                    {{ user.profile.firstname }}
+                    {% if user.profile.verified %}
+                    <i class="fa fa-check-circle" style="color: aliceblue;" aria-hidden="true"></i>
+                    {% endif %}
+                </h5>
+                <h6 style="text-align: left; font-family: cursive; color: antiquewhite;">
+                    @{{ user.username }}
+                </h6>
+                <h6 style="text-align: left; font-family:cursive; color:rgb(153, 208, 218);" class="email-profile">
+                    {{ user.email }}
+                </h6>
+            </div>
+        </div>
+        {% endif %}
+    </article>
+
+
+    <article class="media content-section">
+        <div class="row full-width pl-2">
+            <div class="col-6 white-important-next">
+                Followers
+            </div>
+            <div class="col-6 white-important-next">
+                Following
+            </div>
+            {% if user_profile != None %}
+            <div class="col-6">
+                <a href="{% url 'user-followers' user_profile.username %}">
+                    <h3 class="white-important-next follow-click">
+                        {{ user_profile.profile.followers }}
+                    </h3>
+                </a>
+            </div>
+            <div class="col-6">
+                <a href="{% url 'user-follows' user_profile.username %}">
+                    <h3 class="white-important-next follow-click">
+                        {{ user_profile.profile.following }}
+                    </h3>
+                </a>
+            </div>
+            {% else %}
+            <div class="col-6">
+                <a href="{% url 'user-followers' user.username %}">
+                    <h3 class="white-important-next follow-click">
+                        {{ user.profile.followers }}
+                    </h3>
+                </a>
+            </div>
+
+            <div class="col-6">
+                <a href="{% url 'user-follows' user.username %}">
+                    <h3 class="white-important-next follow-click">
+                        {{ user.profile.following }}
+                    </h3>
+                </a>
+            </div>
+            {% endif %}
+        </div>
+    </article>
+
+    <div class="d-flex">
+        {% if user_profile == request.user %}
+        <div style="margin-left: auto; margin-right:auto">
+            <a class="btn btn-sm btn-outline-primary mb-4 mr-3 " href="{% url 'post-create' %}">
+                Post
+            </a>
+        </div>
+        {% endif %}
+        {% if user_profile is not None and user_profile.id != user.id and user.username != '' %}
+        <form method="POST">
+            {% csrf_token %}
+            <div class="form-group btn-group dropright">
+                <button style="margin-left: 18px" class="btn btn-sm btn-outline-primary"
+                    name="{% if can_follow %}follow{% else %}unfollow{% endif %}" type="submit">
+                    {% if can_follow %}
+                        FOLLOW
+                    {% else %}
+                        UNFOLLOW
+                    {% endif %}
+                </button>
+                    <button type="button" class="btn bt-sm btn-outline-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <span class="sr-only"></span>
+                      </button>
+                      <div class="dropdown-menu" style="font-family: cursive;">
+                        {% if user_profile != None %}
+                        <a class="dropdown-item" href="{% url 'resume' user_profile.username %}" target="_blank">Curriculam Vitae</a>
+                        <a class="dropdown-item" href="{% url 'sem-result' user_profile.username %}" target="_blank">Semester Results</a>
+                        <a class="dropdown-item" href="{% url 'create-thread' %}" target="_blank">Message Me</a>
+                        {% endif %}
+                      </div>
+                
+            </div>
+        </form>
+        {% endif %}
+    </div>
+
+</div>
+
+{% endif %}
+
+<br>
+<p>
+    <a id="modify-a" href="{% url 'privacy_policy' %}">Privacy policy</a>,
+    <a id="modify-a" href="{% url 'cookies' %}">Cookies</a>,
+    <!-- <a href="">Ads info</a>, -->
+    © 2021 icpForum, Inc.
+</p>
+
+</div>
+</div>
+{% endblock content %}

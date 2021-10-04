@@ -1,0 +1,75 @@
+{% extends 'blog/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<div class="container">
+	<div class="col-3 no-padding align-items-center mx-auto">
+		<div class="row mt-2 p-3 mr-2 white-important">
+			{% if thread.receiver == request.user %}
+				<img class="rounded-circle mr-2" style="width: 40px; height: 40px;" src="{{ thread.user.profile.image.url }}">
+				<h5 class="mt-2">{{ thread.user.profile.firstname }}  (@{{ thread.user }})</h5> 
+			{% else %}
+				<img class="rounded-circle mr-2" style="width: 40px; height: 40px;" src="{{ thread.receiver.profile.image.url }}">
+				<h5 class="mt-2">{{ thread.receiver.profile.firstname }}   (@{{ thread.receiver }})</h5>
+			{% endif %}
+		</div>
+		<!-- {% if result.profile.verified %}
+			<i class="fa fa-check-circle" style="color: aliceblue;" aria-hidden="true"></i>
+		{% endif %} -->
+	</div>
+
+	{% if message_list.all.count == 0 %}
+	<div class="row my-5">
+		<div class="col-md-12">
+			<p class="empty-text">No Messages</p>
+		</div>
+	</div>
+	{% endif %}
+
+	<div class="row">
+		<div class="col-md-6 mx-auto">
+			{% for message in message_list %}
+				{% if message.receiver_user == request.user %}
+				<div class="my-1">
+					<div class="received-message my-3">
+						<p>{{ message.body }}</p>
+						<small style="opacity: 0.4;" class="white-important d-flex full-width flex-row-reverse">
+							{{ message.date | date:"H:i l, d.m.y" }}
+						</small>
+					</div>
+				</div>
+				{% elif message.sender_user == request.user %}
+				<div class="offset-6">
+					<div class="sent-message my-3">
+						<p>{{ message.body }}</p>
+						<small style="opacity: 0.4;" class="white-important-next d-flex full-width flex-row-reverse">
+							{{ message.date | date:"H:i l, d.m.y" }}
+						</small>
+					</div>
+				</div>
+				{% endif %}
+			{% endfor %}
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-12 col-md-6 p-3 shadow-sm mx-auto">
+			<form method="POST" action="{% url 'create-message' thread.pk %}" enctype="multipart/form-data">
+				{% csrf_token %}
+				{{ form | crispy }}
+
+				<div class="d-grid gap-2 mt-3">
+					<button class="btn btn-light" type="submit">Send Message</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+<script>
+    if ( window.history.replaceState ) {
+      window.history.replaceState( null, null, window.location.href );
+    }
+</script>
+{% endblock content %}

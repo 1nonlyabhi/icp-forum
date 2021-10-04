@@ -1,0 +1,19 @@
+{% extends "blog/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="container col-9 mx-auto">
+    <h3 class="white-important">
+        {{  tag_line }}
+    </h3>
+    <form method="POST" class="col-12 col-md-6 no-padding pr-3 pr-md-0" enctype="multipart/form-data">
+        {% csrf_token %}
+        <fieldset class="form-group">
+            {{ form | crispy }}
+        </fieldset>
+        <div class="form-group">
+            <button class="btn btn-outline-primary" type="submit">{{  tag_line }}</button>
+            <a href="{% url 'blog-home' %}" id="cancel" name="cancel" class="btn btn-default">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock content %}

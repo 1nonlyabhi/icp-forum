@@ -1,0 +1,154 @@
+{% load static %}
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<link rel="icon" type="image/png" href="{% static 'blog/favicon.png' %}">
+<title>icpForum</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link type="text/css" rel="stylesheet" href="{% static 'users/css/green.css' %}" />
+<link type="text/css" rel="stylesheet" href="{% static 'users/css/print.css' %}" media="print"/>
+<!--[if IE 7]>
+<link href="css/ie7.css" rel="stylesheet" type="text/css" />
+<![endif]-->
+<!--[if IE 6]>
+<link href="css/ie6.css" rel="stylesheet" type="text/css" />
+<![endif]-->
+<!-- <script type="text/javascript" src="js/jquery-1.4.2.min.js"></script> -->
+<!-- <script type="text/javascript" src="js/jquery.tipsy.js"></script> -->
+<script type="text/javascript" src="{% static 'users/js/cufon.yui.js' %}"></script>
+<script type="text/javascript" src="{% static 'users/js/scrollTo.js' %}"></script>
+<script type="text/javascript" src="{% static 'users/js/myriad.js' %}"></script>
+<!-- <script type="text/javascript" src="js/jquery.colorbox.js"></script> -->
+<script type="text/javascript" src="{% static 'users/js/custom.js' %}"></script>
+<script type="text/javascript">
+		Cufon.replace('h1,h2');
+</script>
+</head>
+<body>
+<!-- Begin Wrapper -->
+<div id="wrapper">
+  <div class="wrapper-top"></div>
+  <div class="wrapper-mid">
+    <!-- Begin Paper -->
+    <div id="paper">
+      <div class="paper-top"></div>
+      <div id="paper-mid">
+        <div class="entry">
+          <!-- Begin Image -->
+          <img class="portrait" src="{{ userdetail.profile.image.url }}" alt="user name" />
+          <!-- End Image -->
+          <!-- Begin Personal Information -->
+          <div class="self">
+            <h1 class="name">{{ profiledetail.firstname }} {{ profiledetail.lastname }} <br />
+              <span>@{{ userdetail.username}} </span></h1>
+            <ul>
+              <li class="mail">{{ userdetail.email }}</li>
+              <li class="ad">{{ profiledetail.location }}</li>
+              <li class="web">User Website</li>
+            </ul>
+          </div>
+          <!-- End Personal Information -->
+          <!-- Begin Social -->
+          <div class="social">
+            <ul>
+              <li><a id="saveAsPdfBtn" class='north' href="https://www.sejda.com/html-to-pdf" title="Download .pdf"><img src="{% static 'users/images/icn-save.jpg' %}" alt="Download the pdf version" /></a></li>
+              <li><a class='north' href="javascript:window.print()" title="Print"><img src="{% static 'users/images/icn-print.jpg' %}" alt="" /></a></li>
+              <li><a class='north' href="{{ profiledetail.github }}" target="_blank" title="My GitHub Profile"><img src="{% static 'users/images/icn-github.jpg' %}" alt="" /></a></li>
+              <li><a class='north' href="{{ profiledetail.twitter }}" target="_blank" title="Follow me on Twitter"><img src="{% static 'users/images/icn-twitter.jpg' %}" alt="" /></a></li>
+              <li><a class='north' href="{{ profiledetail.linkedin }}" target="_blank" title="My Linked-In Profile"><img src="{% static 'users/images/icn-linkedin.jpg' %}" alt="" /></a></li>
+            </ul>
+          </div>
+          <script>
+            document.getElementById('saveAsPdfBtn').addEventListener('click', function(e){
+              var pageUrl = encodeURIComponent(window.location.href);
+              window.open('https://www.sejda.com/html-to-pdf?save-link=' + pageUrl);
+              e.preventDefault();
+            });
+            </script>
+          <!-- End Social -->
+        </div>
+        <!-- Begin 1st Row -->
+        <div class="entry">
+          <h2>Bio</h2>
+          <p>{{ profiledetail.bio }}</p>
+        </div>
+        <!-- End 1st Row -->
+        <!-- Begin 2nd Row -->
+        <div class="entry">
+          <h2>EDUCATION</h2>
+          {% for edu in educationdetail %}
+          <div class="content">
+            <h3>{{ edu.startYear }} - {{ edu.startYear }}</h3>
+            <p>{{ edu.school }}<br />
+              <em><b>{{ edu.degree }}</b> in <b>{{ edu.field }}</b> with <b>{{ edu.percentage }}%</b></em></p>
+          </div>
+          {% endfor %}
+        </div>
+        <!-- End 2nd Row -->
+        <!-- Begin 3rd Row -->
+        <div class="entry">
+          <h2>SKILLS</h2>
+          <div class="content">
+            <h3>Extra-Curricular</h3>
+            <p>{{ profiledetail.extraskills }}</p>
+          </div>
+          <div class="content">
+            <h3>Technical</h3>
+            <p>{{ profiledetail.techskills }}</p>
+          </div>
+        </div>
+        <!-- End 3rd Row -->
+        <!-- Begin 4th Row -->
+        <div class="entry">
+          <h2>CERTIFICATIONS</h2>
+          {% for cer in certificatedetail %}
+          <div class="content">
+            <h3>{{ cer.issueDate }} {% if cer.expire == False %} - {{ cer.expirationDate }} {% endif %}</h3>
+            <p style="font-size: medium;">{{ cer.name }}<br />
+              <em>Issued by {{ cer.organization }}</em>
+              {% if cer.expire %}
+              <em style="font-family: cursive;">This credential doesn't expire. &#10003;</em>
+              {% endif %}
+            </p> 
+            <ul class="info">
+              <li style="font-family:sans-serif">Credential ID: {{cer.credentialID}}</li>
+              <li>Credential URL: <a href="{{ cer.credentialURL }}" target="_blank">Click here...</a></li>
+              {% if cer.certificatePDF != None %}
+              <li>Credential PDF: <a href="{{ cer.certificatePDF.url }}" target="_blank">Click pdf...</a></li>
+              {% endif %}
+              <!-- <li>Description: </li> -->
+            </ul>
+          </div>
+          {% endfor %}
+        </div>
+        <!-- End 4th Row -->
+         <!-- Begin 5th Row -->
+        <div class="entry">
+        <h2>PROJECTS</h2>
+        {% for pro in projectdetail %}
+        <div class="content">
+          <h3>{{ pro.startDate }} {% if pro.status == False %} - {{ pro.completionDate }} {% endif %}</h3>
+          <p style="font-size: medium;">{{ pro.name }}<br />
+            <em>Members: {{ pro.associated }}</em>
+            <!-- <em style="font-family: cursive;">This credential doesn't expire.	&#10003;</em></p> -->
+          <ul class="info">
+            <li>Project URL: <a href="{{ pro.projectURL }}" target="_blank">{{ pro.projectURL }}</a></li>
+            <li>Description: {{ pro.description }}</li>
+          </ul>
+        </div>
+        {% endfor %}
+        </div>
+        <!-- Begin 5th Row -->
+      </div>
+      <div class="clear"></div>
+      <div class="paper-bottom"></div>
+    </div>
+    <!-- End Paper -->
+  </div>
+  <div class="wrapper-bottom"></div>
+</div>
+<div id="message"><a href="#top" id="top-link">Go to Top</a></div>
+<!-- End Wrapper -->
+</body>
+</html>

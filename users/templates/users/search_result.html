@@ -1,0 +1,43 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+
+<div class="container col-6 mx-auto">
+    <div class="form-group">
+        <form action="{% url 'search' %}" method="post">{% csrf_token %}
+            <div style="width: 100%" class="search-container">
+                <div class="search">
+                    <input required name="search" type="text" id="zip-code-input" placeholder="Search icpForum">
+                    <button type="submit" style="border:0; background: transparent;"><i class="fa fa-search"></i>
+                    </button> </a>
+                </div>
+        </form>
+    </div>
+    <br>
+    {% if results %}
+    {% for result in results %}
+    <div class="search-result-profile">
+        <div style="padding-left: 0px !important;" class="col-8 no-padding d-flex align-items-center">
+            <img class="rounded-circle mr-2" style="width: 40px; height: 40px;" src="{{ result.profile.image.url }}">
+            <a class="mr-2 white-important-next" href="{% url 'user-posts' result.username %}">
+                {{ result.profile.firstname }}
+            </a>
+            {% if result.profile.verified %}
+                <i class="fa fa-check-circle" style="color: aliceblue;" aria-hidden="true"></i>
+            {% endif %} @{{ result.username }}
+        </div>
+            Followers:
+                {{ result.profile.followers }},
+            Following:
+                {{ result.profile.following }}
+
+    </div>
+    {% endfor %}
+    {% else %}
+    <div class="alert alert-info" role="alert">
+        No result, please try to search again!
+    </div>
+    {% endif %}
+</div>
+
+{% endblock %}

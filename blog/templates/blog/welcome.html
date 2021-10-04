@@ -1,0 +1,56 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>icpForum</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+   <!-- Favicons -->
+  <link href="{% static 'blog/favicon.png' %}" rel="icon">
+  <!-- <link href="{% static 'blog/apple-touch-icon.png' %}" rel="apple-touch-icon"> -->
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway:400,500,700|Roboto:400,900" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+  <link href="{% static 'vendor/venobox/venobox.css' %}" rel="stylesheet">
+  <link href="{% static 'vendor/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="{% static 'blog/welcome.css' %}" rel="stylesheet">
+
+</head>
+
+<body>
+
+  <!-- ======= Welcome Section ======= -->
+  <section class="hero">
+    <div class="container text-center">
+      <div class="row">
+        <div class="col-md-12">
+          <a class="hero-brand" href="{% url 'welcome' %}" title="Home"><img alt="Bell Logo" src="{% static 'blog/logo.png' %}"></a>
+        </div>
+      </div>
+
+      <div class="col-md-12">
+        <h1>
+          Intranet Communication Platform
+        </h1>
+
+        <p class="tagline">
+          It's not about just web development, it's about logic based automation.
+        </p>
+        <a class="btn btn-full scrollto" href="{% url 'blog-home' %}">Let's Connect</a>
+      </div>
+    </div>
+
+  </section>
+
+</body>
+</html>

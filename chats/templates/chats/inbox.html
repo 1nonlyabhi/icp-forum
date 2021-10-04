@@ -1,0 +1,32 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+
+<div class="container">
+	<div class="row">
+		<div class="col-md-6 p-5">
+			<h3>Your Conversations</h3>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-md-6 pl-5">
+			<form method="GET" action="{% url 'create-thread' %}">
+				<button class="btn btn-light p-3" type="submit">Start a Conversation</button>
+			</form>
+		</div>
+	</div>
+	<br>
+
+	{% for thread in threads.all %}
+	<div class="row">
+		<div class="col-md-6 pl-5">
+			<li>
+			<i class="fa fa-envelope inbox-icon mr-2"></i> {{ thread.user.profile.firstname }} (@{{ thread.user }}) - {{ thread.receiver.profile.firstname }} (@{{ thread.receiver }})  >><a class="stretched-link ml-2" href="{% url 'thread' thread.pk %}">Open</a>
+		</li>
+		</div>
+	</div>
+	{% endfor %}
+</div>
+
+{% endblock content %}

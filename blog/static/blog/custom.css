@@ -1,0 +1,12 @@
+#modify-a{
+    color: #80878b;
+    text-underline: none;
+     text-decoration: none !important;
+  }
+  #modify-a:hover {
+    color: #a0afbd;
+    text-underline: none !important;
+  }
+  .text-muted {
+    color: var(--muted-color) !important;
+  }

@@ -1,0 +1,113 @@
+{% extends "blog/base.html" %}
+{% load static %}
+{% block content %}
+<div class="px-5">
+<div>
+  <div class="container py-5">
+    <div class="row h-100 align-items-center py-5">
+      <div class="col-lg-6">
+        <h1 class="display-4">About Us</h1>
+        <p class="lead text-muted mb-0">Intranet Communication Platform Using MVT Software Design.</p>
+        <p class="lead text-muted">A Project on <a href="https://www.djangoproject.com/" target="_blank" class="text-muted"> 
+                    <u>Django Framework</u></a>
+        </p>
+      </div>
+      <div class="col-lg-3"></div>
+      <div class="col-lg-3 d-none d-lg-block"><img src="{% static 'blog/itm_logo.png' %}" height="230px" width="230px" alt="" class="img-fluid"></div>
+    </div>
+  </div>
+</div>
+
+<div class="bg-light py-5">
+<div class="container py-5">
+  <h5>This project is about a social networking portal. A social networking portal is an online platform which people use to build social networks or social relationships with other people who share similar personal or career interests, activities, backgrounds or real-life connections. Social networking sites allow users to share ideas, digital photos and videos, posts, and to inform others about online or real-world activities and events with people in their network.</h5>
+  <br>
+    <h5>The portal will be exclusively developed for the students, faculty and selective members of the organization. In this project a social media platform for college campus has been created where everyone associated with the college campus such as students, staff members, associated industry professionals and passed out alumni can socialize with each other and share their knowledge about academics, projects, placements and all other activities going on in the campus.</h5>
+  </div>
+</div>
+
+<div class="pt-5">
+  <div class="container py-5">
+    <div class="row mb-4">
+      <div class="col-lg-5 mx-auto">
+        <h2 style="text-align: center;" class="display-4 font-weight-light">Our Team</h2>
+        <p style="text-align: center;" class="font-italic text-muted"></p>
+      </div>
+    </div>
+
+    <div class="row text-center">
+      <!-- Team item-->
+      <div class="col-xl-6 col-sm-6 mb-5">
+        <div class="bg-white rounded shadow-sm py-5 px-4"><img src="{% static 'blog/profile-card.png' %}" alt="" width="100" class="img-fluid rounded-circle mb-3 img-thumbnail shadow-sm">
+          <h5 class="mb-0">Ashutosh Mishra</h5><span class="small text-uppercase text-muted">Project Member (FRONTEND & DB)</span>
+          <ul class="social mb-0 list-inline mt-3">
+            <li class="list-inline-item"><a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a></li>
+            <li class="list-inline-item"><a href="#" class="social-link"><i class="fab fa-twitter"></i></a></li>
+            <li class="list-inline-item"><a href="#" class="social-link"><i class="fab fa-github"></i></a></li>
+            <li class="list-inline-item"><a href="#" class="social-link"><i class="fab fa-linkedin"></i></a></li>
+          </ul>
+        </div>
+      </div>
+      <!-- End-->
+
+      <!-- Team item-->
+      <div class="col-xl-6 col-sm-6 mb-5">
+        <div class="bg-white rounded shadow-sm py-5 px-4"><img src="{% static 'blog/profile-card.png' %}" alt="" width="100" class="img-fluid rounded-circle mb-3 img-thumbnail shadow-sm">
+          <h5 class="mb-0">Abhishek Kr. Gupta</h5><span class="small text-uppercase text-muted">Project Member (BACKEND & DB)</span>
+          <ul class="social mb-0 list-inline mt-3">
+            <li class="list-inline-item"><a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a></li>
+            <li class="list-inline-item"><a href="#" class="social-link"><i class="fab fa-twitter"></i></a></li>
+            <li class="list-inline-item"><a href="#" class="social-link"><i class="fab fa-github"></i></a></li>
+            <li class="list-inline-item"><a href="#" class="social-link"><i class="fab fa-linkedin"></i></a></li>
+          </ul>
+        </div>
+      </div>
+      <!-- End-->
+    </div>
+  </div>
+
+  <div class="container pd-5">
+    <div class="row mb-4">
+      <div class="col-lg-5 mx-auto">
+        <h2 style="text-align: center;" class="display-4 font-weight-light">Our Mentors</h2>
+        <p style="text-align: center;" class="font-italic text-muted"></p>
+      </div>
+    </div>
+
+    <div class="row text-center">
+      <!-- Team item-->
+      <div class="col-xl-4 col-sm-6 mb-5">
+        <div class="bg-white rounded shadow-sm py-5 px-4"><img src="{% static 'blog/Shachi_.jpg' %}" alt="" width="100" class="img-fluid rounded-circle mb-3 img-thumbnail shadow-sm">
+          <h5 class="mb-0">Dr. Shachi Mall</h5><span class="small text-uppercase text-muted">HOD - CSE</span>
+        </div>
+      </div>
+      <!-- End-->
+
+      <!-- Team item-->
+      <div class="col-xl-4 col-sm-6 mb-5">
+        <div class="bg-white rounded shadow-sm py-5 px-4"><img src="{% static 'blog/Mr._Chhitesh_Rai.png' %}" alt="" width="100" class="img-fluid rounded-circle mb-3 img-thumbnail shadow-sm">
+          <h5 class="mb-0">Mr. Chhitesh Rai</h5><span class="small text-uppercase text-muted">Project Guide</span>
+        </div>
+      </div>
+      <!-- End-->
+
+      <!-- Team item-->
+      <div class="col-xl-4 col-sm-6 mb-5">
+        <div class="bg-white rounded shadow-sm py-5 px-4"><img src="{% static 'blog/PriteeYadav.jpg' %}" alt="" width="100" class="img-fluid rounded-circle mb-3 img-thumbnail shadow-sm">
+          <h5 class="mb-0">Ms. Pritee Yadav</h5><span class="small text-uppercase text-muted">Project Teacher</span>
+        </div>
+      </div>
+      <!-- End-->
+
+    </div>
+  </div>
+</div>
+
+
+<footer class="pb-5">
+  <div class="container text-center">
+    <p class="font-italic text-muted mb-0">&copy; Copyrights icpForum.co.in All rights reserved.</p>
+  </div>
+</footer>
+</div>
+{% endblock content %}
