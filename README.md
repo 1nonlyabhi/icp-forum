@@ -4,7 +4,7 @@
 </h1>
 
 <p align='center'>
-  This is the Major Project by [me](https://github.com/1nonlyabhi "Click here") and my classmate [Ashutosh](https://github.com/cestashu "Click here").
+  This is the Major Project by [me](https://github.com/1nonlyabhi/) and my classmate [Ashutosh](https://github.com/cestashu/).
 </p>
 
 
